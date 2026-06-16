@@ -6,6 +6,9 @@ As a summer camp counselor, I was working from CampBrain roster PDFs, but CampBr
 
 This project turns that weekly chore into a browser-only workflow. It supports two main jobs:
 
+Live app:
+[https://campbrain-pdf-csv-converter.vercel.app](https://campbrain-pdf-csv-converter.vercel.app)
+
 1. Convert a single CampBrain roster PDF into a CSV with these exact columns:
 
 ```csv
