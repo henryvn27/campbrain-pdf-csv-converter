@@ -1,8 +1,10 @@
 # CampBrain PDF to CSV Converter
 
-This is a browser-only utility for camps that use CampBrain roster PDFs.
+I built this because I needed a better way to pull shirts for new campers each week.
 
-It supports two main jobs:
+As a summer camp counselor, I was working from CampBrain roster PDFs, but CampBrain did not have a simple way to answer the question I actually needed every week: which kids are new, what cabin are they in, and what shirt sizes do I still need to hand out?
+
+This project turns that weekly chore into a browser-only workflow. It supports two main jobs:
 
 1. Convert a single CampBrain roster PDF into a CSV with these exact columns:
 
@@ -24,6 +26,8 @@ Use this app when you need to:
 - figure out which campers are new this week
 - count shirts only for campers who have not already received one
 - print a cabin-grouped checklist for shirt handout
+
+In practice, the main use case is weekly shirt distribution: compare the current week's campers against previous weeks, isolate only the new kids, and produce a list that is actually useful on the ground.
 
 ## Core behavior
 
