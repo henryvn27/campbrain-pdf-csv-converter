@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --background: #f4f7f1;
+  --ink: #10241c;
+  --muted: #5d6f65;
+  --font-geist: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-geist-mono: "SFMono-Regular", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  background:
+    linear-gradient(rgba(16, 36, 28, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16, 36, 28, 0.035) 1px, transparent 1px),
+    radial-gradient(circle at 18% 0%, rgba(52, 137, 92, 0.15), transparent 25rem),
+    var(--background);
+  background-size: 28px 28px, 28px 28px, auto, auto;
+  color: var(--ink);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button:focus-visible,
+label:focus-within {
+  outline: 3px solid rgba(5, 84, 63, 0.35);
+  outline-offset: 3px;
+}
