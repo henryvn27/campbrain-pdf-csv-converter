@@ -1,30 +1,53 @@
 # CampBrain PDF to CSV Converter
 
-A lightweight single-page Next.js utility for converting CampBrain PDF roster reports into a CSV with these exact columns:
+This is a browser-only utility for camps that use CampBrain roster PDFs.
+
+It supports two main jobs:
+
+1. Convert a single CampBrain roster PDF into a CSV with these exact columns:
 
 ```csv
 Cabin,Last Name,First Name,T-Shirt Size
 ```
 
-## Features
+2. Compare previous-week camper PDFs against the current week, find only the new campers, and generate:
+- a printable shirt-order PDF checklist
+- a CSV of those new campers in the same row format
+
+No PDFs are uploaded to a server. Parsing happens in the browser with `pdfjs-dist`.
+
+## What it is for
+
+Use this app when you need to:
+
+- turn a CampBrain roster PDF into a clean CSV
+- figure out which campers are new this week
+- count shirts only for campers who have not already received one
+- print a cabin-grouped checklist for shirt handout
+
+## Core behavior
 
 - Browser-side PDF processing with `pdfjs-dist`
-- No database, login, API route, or server upload
-- Tailwind CSS drag-and-drop UI
+- No database, login, API route, analytics, or server upload
 - Automatic CSV download named `[Original_PDF_Name]_Parsed.csv`
-- CampBrain-specific cabin, camper name, and T-shirt size parsing
+- Weekly comparison flow for shirt-order PDFs and CSV exports
+- Counselor names in cabin labels are ignored during parsing
 
-## Recognized cabins
+## Recognized cabin labels
+
+The parser currently recognizes these cabin groups:
 
 - Mini Camp
-- B&B - 1 (Dianne)
-- B&B-2 (Marlie)
-- B&B-3 (Valeria)
-- Vipers-1 (Britt)
-- Vipers 2 (Anthony)
+- B&B - 1
+- B&B-2
+- B&B-3
+- Vipers-1
+- Vipers 2
 - Pythons
 - Constrictors
 - Junior High
+
+Cabin matching is intentionally loose around spaces, hyphens, and counselor names in parentheses.
 
 ## Valid T-shirt sizes
 
@@ -37,9 +60,17 @@ Cabin,Last Name,First Name,T-Shirt Size
 - Adult L
 - Adult XL
 
+If a PDF uses different wording for sizes, those rows may come through with a missing size and should be reviewed before ordering shirts.
+
+## Privacy and data handling
+
+- PDFs stay on the user's device during parsing
+- This repo does not include sample camper data
+- This repo should not contain counselor names, camper names, emails, phone numbers, or other personal data in documentation or committed fixtures
+
 ## Local development
 
-Requires Node 20.18+ because this project targets current Next.js/Vercel defaults.
+Requires Node 20.18+.
 
 ```bash
 npm install
@@ -48,12 +79,23 @@ npm run dev
 
 Open `http://localhost:3000`.
 
-## Vercel deployment
+## Deployment
 
-This app is Vercel-ready. Import the repo into Vercel and deploy with default Next.js settings.
+This app is Vercel-ready and uses default Next.js deployment settings.
 
-The `postinstall` script copies the pdf.js worker from `node_modules/pdfjs-dist` into `public/pdf.worker.min.mjs`, avoiding fragile worker imports during production builds.
+The `postinstall` script copies the pdf.js worker from `node_modules/pdfjs-dist` into `public/pdf.worker.min.mjs`, which keeps the worker path stable in production.
 
 ## Parser notes
 
-The parser groups pdf.js text items into visual rows using text coordinates. It then tracks the active cabin as rows are scanned top-to-bottom and emits camper rows when it finds `LastName, FirstName` patterns. T-shirt size detection checks nearby row text first, then falls back to full-row matching.
+The parser:
+
+- groups pdf.js text items into visual rows using text coordinates
+- tracks the active cabin as rows are scanned top-to-bottom
+- extracts camper rows when it finds `LastName, FirstName`
+- looks for valid T-shirt sizes near the name first, then falls back to full-row matching
+
+If CampBrain changes the report formatting, the first things to check are:
+
+- whether cabin headers still match expected labels
+- whether names still appear as `LastName, FirstName`
+- whether T-shirt sizes still use the expected wording
